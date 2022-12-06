@@ -22,16 +22,16 @@ public class GameScript : MonoBehaviour
         int blocks = rnd.Next(0, 2);
         if (blocks == 0)
         {
-            Instantiate(Textblock, new Vector3(-1, 2, 20), Quaternion.identity);
+            Instantiate(Textblock, new Vector3(-1, 3, 15), Quaternion.identity);
         }
         else if (blocks == 1)
         {
-            Instantiate(Textblock, new Vector3(1, 2, 20), Quaternion.identity);
+            Instantiate(Textblock, new Vector3(3, 3, 15), Quaternion.identity);
         }
         else if (blocks == 2)
         {
-            Instantiate(Textblock, new Vector3(-1, 2, 20), Quaternion.identity);
-            Instantiate(Textblock, new Vector3(1, 2, 20), Quaternion.identity);
+            Instantiate(Textblock, new Vector3(-1, 3, 15), Quaternion.identity);
+            Instantiate(Textblock, new Vector3(3, 3, 15), Quaternion.identity);
         }
     }
 }
