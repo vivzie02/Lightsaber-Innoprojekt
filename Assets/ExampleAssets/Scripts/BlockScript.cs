@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BlockScript : MonoBehaviour
 {
-    Material material;
+    public Material material;
+    public Canvas textSpace;
+    public MeshRenderer BlockMaterial;
 
-    private static string displayedText;
     private static bool isCorrect;
     public float speed = 20;
 

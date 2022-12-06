@@ -15,6 +15,7 @@ public class GameScript : MonoBehaviour
     }
 
     private System.Random rnd;
+    private string word;
 
     private void createBlock()
     {
