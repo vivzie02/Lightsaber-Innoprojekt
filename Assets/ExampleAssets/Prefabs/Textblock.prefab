@@ -47,9 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9458ad814045ef7428988e6ffa80e8bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 820c2a25d372d634380d018a3afdea0e, type: 2}
-  textSpace: {fileID: 1689365003258510000}
-  BlockMaterial: {fileID: 0}
   speed: 10
 --- !u!54 &4617009153524577360
 Rigidbody:

@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class BlockScript : MonoBehaviour
 {
-    public Material material;
-    public Canvas textSpace;
-    public MeshRenderer BlockMaterial;
-
     private static bool isCorrect;
     public float speed = 20;
 
@@ -21,5 +17,23 @@ public class BlockScript : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.back * this.speed * Time.deltaTime);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        GameObject block;
+        for(int i = 0; i < 20; i++)
+        {
+            block = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            block.transform.position = transform.localPosition;
+            if(i % 2 == 0)
+            {
+                block.transform.Rotate(0, 90, 0);
+            }
+            block.transform.localScale -= new Vector3(0.9f, 0.9f, 0.9f);
+            Rigidbody rb = block.AddComponent<Rigidbody>();
+            rb.mass = 5;
+        }
+        Destroy(this.gameObject);
     }
 }
