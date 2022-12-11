@@ -12,16 +12,17 @@ public class GameScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FileInfo theSourceFile = new FileInfo("./Assets/ExampleAssets/Texts/test.txt");
-        StreamReader reader = theSourceFile.OpenText();
-        string text;
-        do
+        var _path = Application.streamingAssetsPath + "/Texts/test.txt";
+        UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(_path);
+        www.SendWebRequest();
+        while (!www.isDone)
         {
-            text = reader.ReadLine();
-            words.Add(text);
-        } while (text != null);
+        }
+        String allWordsString = www.downloadHandler.text;
 
-        InvokeRepeating("createBlock", 2.0f, 4.0f);
+        words = allWordsString.Split('\n').ToList();
+
+        InvokeRepeating("createBlock", 10.0f, 4.0f);
     }
 
     public int noBlocks = 0;
