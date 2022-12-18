@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Linq;
+using System.Data;
 
 public class GameScript : MonoBehaviour
 {
@@ -12,15 +13,20 @@ public class GameScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var _path = Application.streamingAssetsPath + "/Texts/test.txt";
-        UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(_path);
-        www.SendWebRequest();
-        while (!www.isDone)
-        {
-        }
-        String allWordsString = www.downloadHandler.text;
+        int counter = 0;
+        List<string> blockText = new List<string>();
+        DataSet currentLevel = new DataSet("level");
+        currentLevel.ReadXml(Application.streamingAssetsPath + "/Texts/Testtext.xml");
 
-        words = allWordsString.Split('\n').ToList();
+        foreach (DataRow row in currentLevel.Tables[0].Rows)
+        {
+            foreach (DataColumn column in currentLevel.Tables[0].Columns)
+            {
+                blockText.Add(row[column].ToString());
+            }
+        }
+
+        words = blockText;
 
         InvokeRepeating("createBlock", 10.0f, 4.0f);
     }

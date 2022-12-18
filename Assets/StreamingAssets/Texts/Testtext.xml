@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<levelContent>
+	<sentence>
+		<text>This is ___ sentence</text>
+		<block1>two</block1>
+		<block2>a</block2>
+		<block3>an</block3>
+		<block4>monkey</block4>
+	</sentence>
+</levelContent>
