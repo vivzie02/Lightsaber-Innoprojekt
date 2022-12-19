@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,8 @@ public class GameScript : MonoBehaviour
         DataSet currentLevel = new DataSet("level");
         currentLevel.ReadXml(Application.streamingAssetsPath + "/Texts/Testtext.xml");
 
+        sentence = currentLevel.Tables[0].Rows[0][0].ToString();
+        
         foreach (DataRow row in currentLevel.Tables[0].Rows)
         {
             foreach (DataColumn column in currentLevel.Tables[0].Columns)
@@ -33,6 +36,7 @@ public class GameScript : MonoBehaviour
 
     public int noBlocks = 0;
     public List<string> words = new List<string>();
+    public string sentence;
 
     private void createBlock()
     {
