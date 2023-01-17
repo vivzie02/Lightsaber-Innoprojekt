@@ -40,8 +40,9 @@ public class GameScript : MonoBehaviour
 
     private void createBlock()
     {
-        if (noBlocks > words.Count)
+        if (this.noBlocks > words.Count)
         {
+            Debug.Log("QUIT");
             Application.Quit();
         }
         Instantiate(Textblock, new Vector3(0.6f, 3, 15), Quaternion.identity);

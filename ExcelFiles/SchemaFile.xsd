@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="Level">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="LevelPart" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Sentence" type="xsd:string"/>
+                            <xsd:element name="Block1" type="xsd:string"/>
+                            <xsd:element name="Block2" type="xsd:string"/>
+                            <xsd:element name="Block3" type="xsd:string"/> 
+							<xsd:element name="Block4" type="xsd:string"/> 
+							<xsd:element name="correctBlock" type="xsd:int"/> 
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
