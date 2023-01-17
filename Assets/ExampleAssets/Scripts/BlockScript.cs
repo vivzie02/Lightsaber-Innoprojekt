@@ -4,13 +4,31 @@ using UnityEngine;
 
 public class BlockScript : MonoBehaviour
 {
+    GameScript TheScript;
+    private GameObject TheGameController;
+
+    private int correctBlock;
+    private int currentBlock;
+
     private static bool isCorrect;
     public float speed = 20;
 
     // Start is called before the first frame update
     void Start()
     {
-        isCorrect = true;
+        TheGameController = GameObject.Find("Hallway_new");
+        TheScript = TheGameController.GetComponent<GameScript>();
+
+        currentBlock = TheScript.noBlocks;
+
+        if(TheScript.correctBlock == currentBlock)
+        {
+            isCorrect= true;
+        }
+        else
+        {
+            isCorrect= false;
+        }
     }
 
     // Update is called once per frame
@@ -25,6 +43,14 @@ public class BlockScript : MonoBehaviour
         for(int i = 0; i < 20; i++)
         {
             block = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            if (isCorrect)
+            {
+                block.GetComponent<Renderer>().material.color = new Color(0, 255, 0);
+            }
+            else
+            {
+                block.GetComponent<Renderer>().material.color = new Color(255, 0, 0);
+            }
             block.transform.position = transform.localPosition;
             if(i % 2 == 0)
             {

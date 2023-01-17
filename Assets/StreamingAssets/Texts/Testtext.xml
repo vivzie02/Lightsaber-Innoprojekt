@@ -1,12 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<levelContent>
-	<sentence>
-		<text>This is __ sentence</text>
-		<block1>two</block1>
-		<block2>a</block2>
-		<block3>an</block3>
-		<block4>monkey</block4>
-		<correctBlock>2</correctBlock>
-	</sentence>
-</levelContent>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Level>
+	<LevelPart>
+		<Sentence>Example sentence</Sentence>
+		<Block1>test</Block1>
+		<Block2>test2</Block2>
+		<Block3>test3</Block3>
+		<Block4>test4</Block4>
+		<correctBlock>3</correctBlock>
+	</LevelPart>
+	<LevelPart>
+		<Sentence>Second example</Sentence>
+		<Block1>test</Block1>
+		<Block2>test</Block2>
+		<Block3>test</Block3>
+		<Block4>test</Block4>
+		<correctBlock>456</correctBlock>
+	</LevelPart>
+	<LevelPart>
+		<Sentence>…</Sentence>
+		<Block1>…</Block1>
+		<Block2>…</Block2>
+		<Block3>…</Block3>
+		<Block4>…</Block4>
+		<correctBlock>…</correctBlock>
+	</LevelPart>
+	<LevelPart>
+		<Sentence>…</Sentence>
+		<Block1>…</Block1>
+		<Block2>…</Block2>
+		<Block3>…</Block3>
+		<Block4>…</Block4>
+		<correctBlock>…</correctBlock>
+	</LevelPart>
+</Level>

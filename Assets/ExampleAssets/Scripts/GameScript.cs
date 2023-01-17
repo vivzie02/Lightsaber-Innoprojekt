@@ -10,6 +10,7 @@ using System.Data;
 public class GameScript : MonoBehaviour
 {
     public GameObject Textblock;
+    public int correctBlock;
 
     // Start is called before the first frame update
     void Start()
@@ -20,21 +21,29 @@ public class GameScript : MonoBehaviour
         currentLevel.ReadXml(Application.streamingAssetsPath + "/Texts/Testtext.xml");
 
         sentence = currentLevel.Tables[0].Rows[0][0].ToString();
+
+        int i = 0;
         
         foreach (DataRow row in currentLevel.Tables[0].Rows)
         {
             foreach (DataColumn column in currentLevel.Tables[0].Columns)
             {
-                blockText.Add(row[column].ToString());
+                if(i != 0)
+                {
+                    blockText.Add(row[column].ToString());
+                }
+                i++;
             }
         }
 
         words = blockText;
 
+        this.correctBlock = Int32.Parse(currentLevel.Tables[0].Rows[0][5].ToString());
+
         InvokeRepeating("createBlock", 10.0f, 4.0f);
     }
 
-    public int noBlocks = 0;
+    public int noBlocks = 1;
     public List<string> words = new List<string>();
     public string sentence;
 
