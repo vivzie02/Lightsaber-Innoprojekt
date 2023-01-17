@@ -43,7 +43,7 @@ public class BlockScript : MonoBehaviour
         for(int i = 0; i < 20; i++)
         {
             block = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            if (isCorrect)
+            if ((isCorrect && collision.gameObject.name == "XRControllerLeft") || (!isCorrect && collision.gameObject.name == "XRControllerRight"))
             {
                 block.GetComponent<Renderer>().material.color = new Color(0, 255, 0);
             }
