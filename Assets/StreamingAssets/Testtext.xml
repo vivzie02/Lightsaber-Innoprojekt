@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Level>
 	<LevelPart>
-		<Sentence>This is a ___ sentence</Sentence>
+		<Sentence>This is a  ___ sentence</Sentence>
 		<Block1>false1</Block1>
 		<Block2>false2</Block2>
 		<Block3>correct</Block3>
-		<Block4>false</Block4>
+		<Block4>false3</Block4>
 		<correctBlock>3</correctBlock>
 	</LevelPart>
 	<LevelPart>

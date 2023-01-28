@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Data;
+using System.Xml;
 
 public class GameScript : MonoBehaviour
 {
@@ -18,7 +19,12 @@ public class GameScript : MonoBehaviour
         int counter = 0;
         List<string> blockText = new List<string>();
         DataSet currentLevel = new DataSet("level");
-        currentLevel.ReadXml(Application.streamingAssetsPath + "/Texts/Testtext.xml");
+
+        /*string filePath = Path.Combine(Application.streamingAssetsPath, "Testtext.xml");
+
+        
+        currentLevel.ReadXml(filePath);
+        
 
         sentence = currentLevel.Tables[0].Rows[0][0].ToString();
 
@@ -34,13 +40,43 @@ public class GameScript : MonoBehaviour
                 }
                 i++;
             }
+        }*/
+
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Testtext.xml");
+        string content;
+
+        
+        WWW reader = new WWW(filePath);
+        while (!reader.isDone) { }
+
+        content = reader.text;
+        // Do something with the content
+
+        XmlReader xmlReader = XmlReader.Create(new StringReader(content));
+        currentLevel.ReadXml(xmlReader);    
+
+        sentence = currentLevel.Tables[0].Rows[0][0].ToString();
+
+        int i = 0;
+
+        foreach (DataRow row in currentLevel.Tables[0].Rows)
+        {
+            foreach (DataColumn column in currentLevel.Tables[0].Columns)
+            {
+                if (i != 0)
+                {
+                    blockText.Add(row[column].ToString());
+                }
+                i++;
+            }
         }
+
 
         words = blockText;
 
         this.correctBlock = Int32.Parse(currentLevel.Tables[0].Rows[0][5].ToString());
 
-        InvokeRepeating("createBlock", 10.0f, 4.0f);
+        InvokeRepeating("createBlock", 0.5f, 4.0f);
     }
 
     public int noBlocks = 1;

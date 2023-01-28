@@ -23,6 +23,8 @@ public class SentenceScript : MonoBehaviour
         TheGameController = GameObject.Find("Hallway_new");
         TheScript = TheGameController.GetComponent<GameScript>();
 
+  
+
         // read word from some file
         // save it in word string
         word = TheScript.sentence;
