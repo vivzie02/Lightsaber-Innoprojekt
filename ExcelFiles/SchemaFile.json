@@ -1,0 +1,14 @@
+{
+  "Level": {
+    "LevelPart": [
+      {
+        "Sentence": "string",
+        "Block1": "string",
+        "Block2": "string",
+        "Block3": "string",
+        "Block4": "string",
+        "correctBlock": "int"
+      }
+    ]
+  }
+}
