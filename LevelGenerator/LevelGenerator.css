@@ -1,0 +1,49 @@
+html, body {margin:0;padding:0;height:100%;}
+
+#outputPreview{
+    width: 50%;
+    height: 100%;
+    border: 5px;
+    border-style: solid;
+    margin-left: 5%;
+}
+
+.stuff{
+    margin: 10px;
+    width: 30%;
+}
+
+#jsonPreview{
+    width: 30%;
+    height: 100%;
+    border: 5px;
+    border-style: solid;
+    margin-left: 10%;
+}
+
+#container{
+    height: 100%;
+}
+
+#jsonField{
+    height: 100%;
+    width: 100%;
+    resize: none;
+}
+
+#sentence{
+    width: 50%;
+}
+
+#blockList{
+    width: 100%;
+    margin: 5%;
+}
+
+.block{
+    height: 10%;
+    width: 20%;
+    border-style: solid thin;
+    margin: 1%;
+    pointer-events: none;
+}
