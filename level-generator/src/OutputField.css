@@ -1,0 +1,29 @@
+.OutputField {
+    float: right;
+    border-style: solid;    
+    width: 100%;
+    margin: 2%;
+}
+
+@media only screen and (min-width: 768px) {
+    .OutputField {
+        float: right;
+        border-style: solid;
+        width: 40%; 
+        margin: 2%;
+    }
+}
+
+h2{
+    margin: 2%;
+    border-bottom: solid;
+}
+
+.levelList{
+    width: 75%;
+    border-style: solid;
+    margin: 2%;
+    height: 20px;
+    text-align: center;
+    padding: 2%;
+}

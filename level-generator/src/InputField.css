@@ -1,0 +1,25 @@
+.InputField {
+    float: left;
+    border-style: solid;    
+    width: 100%;
+    margin: 2%;
+}
+
+@media only screen and (min-width: 768px) {
+    .InputField {
+        float: left;
+        border-style: solid;
+        width: 50%; 
+        margin: 2%;
+    }
+}
+
+#blocks{
+    border-top: solid;
+}
+
+.block{
+    border: solid;
+    margin: 2%;
+}
+
