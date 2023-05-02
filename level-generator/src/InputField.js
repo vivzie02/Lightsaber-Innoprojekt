@@ -11,6 +11,7 @@ import { FaCube } from 'react-icons/fa'
 import { LevelPart } from './LevelPart';
 import { addLevelPart } from './OutputField'; 
 import { red, yellow } from '@mui/material/colors';
+import { upload } from './LevelUpload';
 
 
 function InputField(){
@@ -80,21 +81,10 @@ function InputField(){
     }
 
     const exportData = () => {
-        if (allLevelParts.length == 0) {
-            alert("You have to build a level before you can export");
-            return;
-          }
         
-          const data = JSON.stringify(allLevelParts);
-          const blob = new Blob([data], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
+        //LevelUpload.js
+        upload(allLevelParts);
         
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'level_data.json';
-          link.click();
-        
-          URL.revokeObjectURL(url);
     }
 
     return(
