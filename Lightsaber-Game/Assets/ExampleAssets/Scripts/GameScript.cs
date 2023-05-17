@@ -7,15 +7,24 @@ using System.IO;
 using System.Linq;
 using System.Data;
 using System.Xml;
+using ExampleAssets.Scripts;
 
 public class GameScript : MonoBehaviour
 {
     public GameObject Textblock;
     public int correctBlock;
 
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
+        //Download level files
+        ServerConnection serverConnection = new ServerConnection();
+        serverConnection.downloadFiles();
+
+
         int counter = 0;
         List<string> blockText = new List<string>();
         DataSet currentLevel = new DataSet("level");
