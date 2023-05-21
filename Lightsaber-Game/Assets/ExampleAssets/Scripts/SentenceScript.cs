@@ -15,15 +15,14 @@ public class SentenceScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("DoSomething", 0.2f);//this will happen after 2 seconds
-    }
-
-    private void DoSomething()
-    {
+        // Invoke("DoSomething", 0.2f);//this will happen after 2 seconds
         TheGameController = GameObject.Find("Hallway_new");
         TheScript = TheGameController.GetComponent<GameScript>();
+    }
 
-  
+    public void updateSentence()
+    {
+        Debug.Log("test");  
 
         // read word from some file
         // save it in word string

@@ -20,7 +20,7 @@ public class TextScript : MonoBehaviour
 
         // read word from some file
         // save it in word string
-        word = TheScript.words[TheScript.noBlocks-1];
+        word = TheScript.words[TheScript.noBlocks - 1];
 
         text = GetComponent<Text>();
         text.text = word;
