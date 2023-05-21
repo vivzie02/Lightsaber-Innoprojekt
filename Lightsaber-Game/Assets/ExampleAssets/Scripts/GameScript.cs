@@ -27,6 +27,10 @@ public class GameScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Download level files
+        ServerConnection serverConnection = new ServerConnection();
+        serverConnection.downloadFiles();
+
         sentenceObject = GameObject.Find("Text");
         sentenceScript = sentenceObject.GetComponent<SentenceScript>();
 
