@@ -29,12 +29,12 @@ public class GameScript : MonoBehaviour
     {
         //Download level files
         ServerConnection serverConnection = new ServerConnection();
-        serverConnection.downloadFiles();
+        serverConnection.test();
 
         sentenceObject = GameObject.Find("Text");
         sentenceScript = sentenceObject.GetComponent<SentenceScript>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath, "TestLevel.json");
+        string filePath = Path.Combine(Application.persistentDataPath + "/LevelFiles", "TestLevel.json");
 
         string jsonString = File.ReadAllText(filePath);
 

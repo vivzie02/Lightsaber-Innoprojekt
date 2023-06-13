@@ -3,55 +3,74 @@ using System.Collections.Generic;
 using UnityEngine;
 using Renci.SshNet;
 using System.IO;
+using Renci.SshNet.Sftp;
+using System;
+using System.Threading.Tasks;
+using System.Linq;
+using UnityEngine.Events;
 
 namespace ExampleAssets.Scripts
 {
-    public class ServerConnection
+    public class ServerConnection : MonoBehaviour
     {
-        private static string jsonFilePath = "..\\..\\StreamingAssets\\test"; //Application.persistentDataPath;
+        string host = "ftp-n2.cs.technikum-wien.at";
+        string username = "innoapp";
+        string password = "jGv9t^F5Nun*X6i4$97@";
+        string serverFilePath = "/sftp/Lightsaber";
+        string localFilePath;
 
+        public UnityEvent OnFilesDownloaded = new UnityEvent();
 
-        public void downloadFiles()
+        private void Start()
         {
-            string serverAddress = "ftp-n2.cs.technikum-wien.at";
-            string username = "innoapp";
-            string password = "jGv9t^F5Nun*X6i4$97@";
-            int port = 22; // SFTP default port
+            if (!Directory.Exists(Application.persistentDataPath + "/LevelFiles"))
+                Directory.CreateDirectory(Application.persistentDataPath + "/LevelFiles");
 
-            SftpClient client = new SftpClient(serverAddress, port, username, password);
+            localFilePath = Application.persistentDataPath + "/LevelFiles";
 
-            try
+            UpdateFilesFromServer();
+        }
+
+        public async void UpdateFilesFromServer()
+        {
+            List<string> filesOnServer = await Task.Run(() => SFTPUtils.GetFilesFromFTPDirectory(host, username, password, serverFilePath));
+            List<string> localFiles = Directory.GetFiles(localFilePath, "*" + ".json").ToList();
+
+            for (int i = localFiles.Count - 1; i >= 0; i--)
             {
-                client.Connect();
-                Debug.Log("Hmm");
-                if (client.IsConnected)
+                string localFileName = Path.GetFileName(localFiles[i]);
+                if (!filesOnServer.Contains(localFileName))
                 {
-                    Debug.Log("Test");
-                    string remoteFolderPath = "/sftp/Lightsaber";
-                    string localFolderPath = jsonFilePath;
+                    File.Delete(localFiles[i]);
+                    localFiles.RemoveAt(i);
+                }
+                else
+                    localFiles[i] = localFileName;
+            }
 
-                    var files = client.ListDirectory(remoteFolderPath);
-
-                    foreach (var file in files)
-                    {
-                        string remoteFilePath = remoteFolderPath + "/" + file.Name;
-                        string localPath = Path.Combine(localFolderPath, file.Name);
-
-                        using (var fileStream = File.OpenWrite(localPath))
-                        {
-                            Debug.Log(file.Name);
-                            client.DownloadFile(remoteFilePath, fileStream);
-                        }
-                    }
+            foreach (string fileOnServer in filesOnServer)
+            {
+                if (!localFiles.Contains(fileOnServer))
+                {
+                    bool downloaded = await Task.Run(() => SFTPUtils.DownloadFile(host, username, password, serverFilePath + "/" + fileOnServer, localFilePath + "/" + fileOnServer));
+                    if (!downloaded)
+                        Debug.LogError("downloading file: " + fileOnServer + " failed");
                 }
             }
-            finally
-            {
-                if (client.IsConnected)
-                    client.Disconnect();
-                client.Dispose();
-            }
+
+            OnFilesDownloaded?.Invoke();
+        }
+
+        public void test()
+        {
+            if (!Directory.Exists(Application.persistentDataPath + "/LevelFiles"))
+                Directory.CreateDirectory(Application.persistentDataPath + "/LevelFiles");
+
+            localFilePath = Application.persistentDataPath + "/LevelFiles";
+
+            UpdateFilesFromServer();
         }
     }
 }
+
 
