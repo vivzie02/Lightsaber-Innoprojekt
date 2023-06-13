@@ -49,7 +49,7 @@ public class MainMenuScript : MonoBehaviour
 
     void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("SampleScene");
 
     }
 

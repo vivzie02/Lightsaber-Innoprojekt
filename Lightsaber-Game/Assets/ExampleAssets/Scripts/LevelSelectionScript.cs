@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
+
 
 public class LevelSelectionScript : MonoBehaviour
 {
     public ScrollRect levelList;
     public GameObject simpleButton;
+	    private string selectedLevelPath; // Path of the selected level
+
 
     //private static string levelPath = "Assets\\StreamingAssets\\test"; //Application.persistentDataPath;
 	private static string levelPath = "Assets/StreamingAssets/test";
@@ -32,7 +38,7 @@ public class LevelSelectionScript : MonoBehaviour
 		
         string[] levelNames;
 
-        levelNames = Directory.GetFiles(levelPath, "*.txt");
+        levelNames = Directory.GetFiles(levelPath, "*.json");
 
         foreach(string name in levelNames)
         {
@@ -62,11 +68,30 @@ public class LevelSelectionScript : MonoBehaviour
 			levelButton.transform.position = buttonPosition; // Set button position
 
 			buttonPosition.y -= 0.18f; // Adjust the y position for the next button
+			
+			//store fiel path if button click
+			Button button = levelButton.GetComponent<Button>();
+			button.onClick.AddListener(() => OnLevelButtonClicked(filePath));
+
 
         }
 
 		
     }
+	
+	private void OnLevelButtonClicked(string filePath)
+	{
+		//selectedLevelPath = filePath;
+		
+		
+		//copy selected level to "Assets/StreamingAssets" as TestLevel.json
+		File.Copy(selectedLevelPath, Path.Combine(Application.streamingAssetsPath, "TestLevel.json"), true);
+		Debug.Log("Selected level copied to: " + Path.Combine(Application.streamingAssetsPath, "TestLevel.json"));
+		
+		//go back to main menu
+		SceneManager.LoadScene("MainMenu");
+	}
+	
 	
 /*
 	private void printLevelNames(string[] levelNames)
