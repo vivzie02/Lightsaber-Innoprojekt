@@ -50,6 +50,7 @@ namespace ExampleAssets.Scripts
             {
                 if (!localFiles.Contains(fileOnServer))
                 {
+                    Debug.Log(localFilePath);
                     bool downloaded = await SFTPUtils.DownloadFile(host, username, password, serverFilePath + "/" + fileOnServer, localFilePath + "/" + fileOnServer);
                     if (!downloaded)
                         Debug.LogError("downloading file: " + fileOnServer + " failed");

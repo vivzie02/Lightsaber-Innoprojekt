@@ -83,12 +83,26 @@ function InputField(){
     const exportData = () => {
         
         //LevelUpload.js
-        upload(allLevelParts);
+        var fileName = document.getElementById("fileName").value;
+
+        const fileNameRegex = new RegExp("^[^\.<>:\"\/\\|?*]*$");
+        if(!fileNameRegex.test(fileName)){
+            alert("Input a valid Level Name");
+            return;
+        }
+
+        upload(allLevelParts, fileName);
         
     }
 
     return(
         <div className="InputField">
+            <TextField id="fileName" label="fileName" variant="outlined"
+                sx={{
+                    margin: 2,
+                    width: '60%'
+
+              }}/><br/>
             <TextField id="sentence" label="Sentence" variant="outlined"
                 sx={{
                     margin: 2,

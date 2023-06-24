@@ -103,6 +103,10 @@ public class LevelSelectionScript : MonoBehaviour
         selectedLevelPath = Application.persistentDataPath + "\\LevelFiles\\" + buttonText.text + ".json";
 		
 		//copy selected level to "Assets/StreamingAssets" as TestLevel.json
+        if(!File.Exists(Application.persistentDataPath + "/LevelFiles/TestLevel.json")) {
+            File.Create(Application.persistentDataPath + "/LevelFiles/TestLevel.json");
+        }
+
 		File.Copy(selectedLevelPath, Path.Combine(Application.persistentDataPath + "/LevelFiles", "TestLevel.json"), true);
 		Debug.Log("Selected level copied to: " + Path.Combine(Application.persistentDataPath + "/LevelFiles", "TestLevel.json"));
 		

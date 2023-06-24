@@ -1,10 +1,8 @@
-export const upload = async(allLevelParts) => {
+export const upload = async(allLevelParts, levelName) => {
     if (allLevelParts.length == 0) {
     alert("You have to build a level before you can export");
     return;
   }
-
-  const levelName = "TestLevel";
 
   const data = JSON.stringify(allLevelParts);
   const blob = new Blob([data], { type: 'application/json' });
@@ -13,15 +11,15 @@ export const upload = async(allLevelParts) => {
   const formData = new FormData();
   formData.append('blobFile', blob, `${levelName}.json`);
 
-  alert(formData.get('levelName'));
   try {
     const response = await fetch("http://localhost:3000/upload", {
       method: "POST",
       body: formData
     });
     const result = await response.json();
-    console.log(result);
+    alert("Successfully uploaded level to server");
   } catch (error) {
     console.error(error);
+    alert("Error while uploading");
   }
 }

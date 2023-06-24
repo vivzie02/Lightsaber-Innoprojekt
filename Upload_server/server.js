@@ -12,9 +12,9 @@ class SFTPClient {
     async connect(options) {
         console.log(`Connecting to ${options.host}:${options.port}, ${options.username} + ${options.password}`);
         try {
-        await this.client.connect(options);
+            await this.client.connect(options);
         } catch (err) {
-        console.log('Failed to connect:', err);
+            console.log('Failed to connect:', err);
         }
     }
 
