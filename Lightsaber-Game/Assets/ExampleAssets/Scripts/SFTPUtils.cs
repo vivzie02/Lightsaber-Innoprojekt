@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Renci.SshNet.Sftp;
 using System.IO;
 using System;
+using System.Threading.Tasks;
 
 public static class SFTPUtils
 {
@@ -35,7 +36,7 @@ public static class SFTPUtils
         return actualFiles;
     }
 
-    public static bool DownloadFile(string host, string username, string password, string serverFilePath, string localFilePath)
+    public static async Task<bool> DownloadFile(string host, string username, string password, string serverFilePath, string localFilePath)
     {
         bool success = true;
         try

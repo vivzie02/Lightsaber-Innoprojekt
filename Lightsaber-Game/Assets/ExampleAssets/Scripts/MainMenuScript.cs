@@ -18,8 +18,6 @@ public class MainMenuScript : MonoBehaviour
 
         startGameButton.onClick.AddListener(StartGame);
         levelSelectorButton.onClick.AddListener(LevelSelector);
-
-        levelSelectorButton.onClick.Invoke();
     }
 
     private void FindChildObjects()

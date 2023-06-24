@@ -27,14 +27,12 @@ namespace ExampleAssets.Scripts
                 Directory.CreateDirectory(Application.persistentDataPath + "/LevelFiles");
 
             localFilePath = Application.persistentDataPath + "/LevelFiles";
-
-            UpdateFilesFromServer();
         }
 
-        public async void UpdateFilesFromServer()
+        public async Task UpdateFilesFromServer()
         {
             List<string> filesOnServer = await Task.Run(() => SFTPUtils.GetFilesFromFTPDirectory(host, username, password, serverFilePath));
-            List<string> localFiles = Directory.GetFiles(localFilePath, "*" + ".json").ToList();
+            List<string> localFiles = Directory.GetFiles(Application.persistentDataPath + "/LevelFiles", "*" + ".json").ToList();
 
             for (int i = localFiles.Count - 1; i >= 0; i--)
             {
@@ -52,7 +50,7 @@ namespace ExampleAssets.Scripts
             {
                 if (!localFiles.Contains(fileOnServer))
                 {
-                    bool downloaded = await Task.Run(() => SFTPUtils.DownloadFile(host, username, password, serverFilePath + "/" + fileOnServer, localFilePath + "/" + fileOnServer));
+                    bool downloaded = await SFTPUtils.DownloadFile(host, username, password, serverFilePath + "/" + fileOnServer, localFilePath + "/" + fileOnServer);
                     if (!downloaded)
                         Debug.LogError("downloading file: " + fileOnServer + " failed");
                 }
@@ -61,14 +59,14 @@ namespace ExampleAssets.Scripts
             OnFilesDownloaded?.Invoke();
         }
 
-        public void test()
+        public async Task test()
         {
-            if (!Directory.Exists(Application.persistentDataPath + "/LevelFiles"))
-                Directory.CreateDirectory(Application.persistentDataPath + "/LevelFiles");
-
-            localFilePath = Application.persistentDataPath + "/LevelFiles";
-
-            UpdateFilesFromServer();
+            //if (!Directory.Exists(Application.persistentDataPath + "/LevelFiles"))
+            //{
+            //    Directory.CreateDirectory(Application.persistentDataPath + "/LevelFiles");
+            //}
+            this.localFilePath = Application.persistentDataPath + "/LevelFiles";
+            await UpdateFilesFromServer();
         }
     }
 }
