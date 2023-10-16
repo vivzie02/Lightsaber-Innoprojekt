@@ -85,7 +85,7 @@ function InputField(){
         //LevelUpload.js
         var fileName = document.getElementById("fileName").value;
 
-        const fileNameRegex = new RegExp("^[^\.<>:\"\/\\|?*]*$");
+        const fileNameRegex = new RegExp("^[^\.<>:\"\/\\|?*]+$");
         if(!fileNameRegex.test(fileName)){
             alert("Input a valid Level Name");
             return;
