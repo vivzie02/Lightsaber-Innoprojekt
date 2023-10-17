@@ -88,7 +88,14 @@ public class GameScript : MonoBehaviour
             sentenceScript.updateSentence();
             return;
         }
-        Instantiate(Textblock, new Vector3(0.6f, 3, 15), Quaternion.identity);
+        if(noBlocks % 2 == 0)
+        {
+            Instantiate(Textblock, new Vector3(2f, 3, 15), Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(Textblock, new Vector3(-1f, 3, 15), Quaternion.identity);
+        }
         GameObject block = GameObject.Find("Textblock(Clone)");
         block.name = "Block" + noBlocks.ToString();
     }
