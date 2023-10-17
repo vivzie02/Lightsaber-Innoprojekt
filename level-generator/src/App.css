@@ -20,8 +20,10 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App {
+  width: 100vw;
+  height: 100vh;
+  background-color: #abc4d8;
 }
 
 @keyframes App-logo-spin {
