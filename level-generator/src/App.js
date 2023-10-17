@@ -5,7 +5,7 @@ import OutputField from './OutputField';
 function App() {
   return (
     <div className="App">
-        <InputField /> 
+        <InputField />
         <OutputField />
     </div>
   );
