@@ -12,16 +12,16 @@ import { LevelPart } from './LevelPart';
 import { addLevelPart } from './OutputField'; 
 import { red, yellow } from '@mui/material/colors';
 import { upload } from './LevelUpload';
+import { NestCamWiredStand } from '@mui/icons-material';
 
 
 function InputField(){
-    const [allLevelParts, setAllLevelParts] = useState([]);
+    const [allLevelPartsLeft, setAllLevelPartsLeft] = useState([]);
+    const [allLevelPartsRight, setAllLevelPartsRight] = useState([]);
+    const [listLeft, setListLeft] = useState([]);
+    const [listRight, setListRight] = useState([]);
 
-    const [list, setList] = useState([
-        
-    ]);
-
-    const addBlock = () => {
+    const addBlock = (direction) => {
         var blockText = document.getElementById("blockInput").value;
         if(blockText == ""){
             alert("Please input a value for the block");
@@ -29,20 +29,55 @@ function InputField(){
         }
 
         const newItem = { blockText: blockText, icon: <Avatar><FaCube /></Avatar>, correct: false, bgcolor: 'red' };
-        setList([...list, newItem]);
-
+        
+        if(direction === "left"){
+            setListLeft([...listLeft, newItem]);
+        }
+        else{
+            setListRight([...listRight, newItem]);
+        }
         document.getElementById("blockInput").value = "";
     }
 
-    const selectBlock = (index) => {
-        const newList = list.map((item, i) => {
-            if(i === index){
-                return {...item, correct: true, bgcolor: 'green'}
-            } else{
+    const addBlockLeft = () => {
+        addBlock("left");
+    }
+
+    const addBlockRight = () => {
+        addBlock("right");
+    }
+
+    const selectBlock = (index, direction) => {
+        if(direction === "left"){
+            const newList = listLeft.map((item, i) => {
+                if(i === index){
+                    return {...item, correct: true, bgcolor: 'green'}
+                } else{
+                    return {...item, correct: false, bgcolor: 'red'}
+                }
+            });
+            setListLeft(newList);
+
+            const newRightList = listRight.map((item, i) => {
                 return {...item, correct: false, bgcolor: 'red'}
-            }
-        });
-        setList(newList);
+            });
+            setListRight(newRightList);
+        }
+        else{
+            const newList = listRight.map((item, i) => {
+                if(i === index){
+                    return {...item, correct: true, bgcolor: 'green'}
+                } else{
+                    return {...item, correct: false, bgcolor: 'red'}
+                }
+            });
+            setListRight(newList);
+
+            const newLeftList = listLeft.map((item, i) => {
+                return {...item, correct: false, bgcolor: 'red'}
+            });
+            setListLeft(newLeftList);
+        }
     }
 
     const saveEntry = () => {
@@ -55,13 +90,26 @@ function InputField(){
         var blocks = [];
         var correctBlock;
 
-        const blockList = list.map((item, i) => {
+        const blockListLeft = listLeft.map((item, i) => {
             if(item.correct){
                 correctBlock = i;
             }
-            blocks.push(item.blockText);
+            blocks.push({
+                text: item.blockText,
+                position: "left"
+            });
         });
-        if(blockList.length == 0){
+        const blockListRight = listRight.map((item, i) => {
+            if(item.correct){
+                correctBlock = blockListLeft.length + i;
+            }
+            blocks.push({
+                text: item.blockText,
+                position: "right"
+            });
+        });
+
+        if(blockListLeft.length === 0 && blockListRight === 0){
             alert("Please assign at least one block to the level first");
             return;
         }
@@ -73,11 +121,12 @@ function InputField(){
 
         const entry = new LevelPart(sentence, blocks, correctBlock);
 
-        setAllLevelParts([...allLevelParts, entry]);
+        setAllLevelPartsLeft([...allLevelPartsLeft, entry]);
 
-        addLevelPart([...allLevelParts, entry]);
+        addLevelPart([...allLevelPartsLeft, entry]);
 
-        setList([]);
+        setListLeft([]);
+        setListRight([]);
     }
 
     const exportData = () => {
@@ -91,7 +140,7 @@ function InputField(){
             return;
         }
 
-        upload(allLevelParts, fileName);
+        upload(allLevelPartsLeft, fileName);
         
     }
 
@@ -114,31 +163,55 @@ function InputField(){
                     margin: 2
                 }}/>
   
-            <Button variant="contained" onClick={addBlock}
+            <Button variant="contained" onClick={addBlockLeft}
                 sx={{
                     margin: 2
                 }}>
-                Add Block
+                Add Block Left
+            </Button>
+
+            <Button variant="contained" onClick={addBlockRight}
+                sx={{
+                    margin: 2
+                }}>
+                Add Block Right
             </Button>
 
             <Button variant="contained" color="primary" sx={{backgroundColor: yellow[800]}} onClick={() => saveEntry()}>Save Entries</Button>
 
             <Button variant='contained' color="primary" sx={{backgroundColor: red[500], margin: 2}} onClick={() => exportData()}>Export Level</Button>
 
-            <div id='blocks'>
-                <List sx={{ width: '100%', maxWidth: 360 }}>
-                    {list.map((item, index) => (
-                    <ListItem key={index} className='block' onClick={() => selectBlock(index)} style={{backgroundColor: item.bgcolor}}>
-                        <ListItemAvatar>
-                        <Avatar>
-                            {item.icon}
-                        </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={item.blockText} />
-                    </ListItem>
-                    ))}
-                </List>
+            <div id='blocks' style={{ display: 'flex' }}>
+                <div id='left' style={{ flex: 1 }}>
+                    <List sx={{ width: '100%', maxWidth: 360 }}>
+                        {listLeft.map((item, index) => (
+                            <ListItem key={index} className='block' onClick={() => selectBlock(index, "left")} style={{ backgroundColor: item.bgcolor }}>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        {item.icon}
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={item.blockText} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </div>
+                <div id='right' style={{ flex: 1 }}>
+                    <List sx={{ width: '100%', maxWidth: 360 }}>
+                        {listRight.map((item, index) => (
+                            <ListItem key={index} className='block' onClick={() => selectBlock(index, "right")} style={{ backgroundColor: item.bgcolor }}>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        {item.icon}
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={item.blockText} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </div>
             </div>
+
         </div>
         
     )
