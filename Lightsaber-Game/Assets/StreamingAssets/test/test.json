@@ -1,1 +1,42 @@
-[{"sentence":"Ora","blocks":["1","2","3"],"correctBlock":1},{"sentence":"12","blocks":["54"],"correctBlock":1}]
+[
+  {
+    "sentence": "Sentence1",
+    "blocks": [
+      {
+        "text": "left1",
+        "position": "left"
+      },
+      {
+        "text": "right1",
+        "position": "right"
+      },
+      {
+        "text": "correctRight2",
+        "position": "right"
+      },
+      {
+        "text": "right3",
+        "position": "right"
+      }
+    ],
+    "correctBlock": 2
+  },
+  {
+    "sentence": "Sentence2",
+    "blocks": [
+      {
+        "text": "left",
+        "position": "left"
+      },
+      {
+        "text": "lfet2",
+        "position": "left"
+      },
+      {
+        "text": "left3",
+        "position": "left"
+      }
+    ],
+    "correctBlock": 2
+  }
+]
