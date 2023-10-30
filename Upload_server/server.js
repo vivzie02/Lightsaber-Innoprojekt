@@ -65,6 +65,17 @@ class SFTPClient {
     app.post('/upload', async (req, res) => {
         console.log(req.body);
         console.log(req.files);
+		
+		if (req.files && req.files.blobFile) {
+			try {
+				const uploadedJson = JSON.parse(req.files.blobFile.data.toString('utf8'));
+				console.log('Uploaded JSON content:', JSON.stringify(uploadedJson, null, 2));
+			} catch (error) {
+				console.error('Error parsing uploaded JSON:', error);
+			}
+		} else {
+			console.log('No valid JSON file uploaded.');
+		}
         
         //* Open the connection
         const client = new SFTPClient();

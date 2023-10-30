@@ -9,6 +9,27 @@ using System.Data;
 using System.Xml;
 using ExampleAssets.Scripts;
 
+[Serializable]
+public class RootObject
+{
+    public List<LevelInfo> levelParts;
+}
+
+[Serializable]
+public class LevelInfo
+{
+    public string sentence;
+    public List<Block> blocks;
+    public int correctBlock;
+}
+
+[Serializable]
+public class Block
+{
+    public string text;
+    public string position;
+}
+
 public class GameScript : MonoBehaviour
 {
     private GameObject sentenceObject;
@@ -38,6 +59,7 @@ public class GameScript : MonoBehaviour
         try
         {
             filePath = Path.Combine(Application.persistentDataPath + "/LevelFiles", "TestLevel.json");
+            //filePath = ".\\Assets\\StreamingAssets\\test\\test.json";
         }
         catch(Exception ex)
         {
@@ -57,7 +79,11 @@ public class GameScript : MonoBehaviour
             levelParts.Add(levelInfo);
         }
         sentence = levelParts[0].sentence;
-        words = levelParts[0].blocks;
+        Debug.Log(levelParts[0].blocks[1].position);
+        foreach(Block block in levelParts[0].blocks)
+        {
+            words.Add(block.text);
+        }
         correctBlock = levelParts[0].correctBlock + 1;
 
         sentenceScript.updateSentence();
@@ -82,13 +108,17 @@ public class GameScript : MonoBehaviour
             Debug.Log("switch");
 
             sentence = levelParts[levelCounter].sentence;
-            words = levelParts[levelCounter].blocks;
+            words.Clear();
+            foreach (Block block2 in levelParts[levelCounter].blocks)
+            {
+                words.Add(block2.text);
+            }
             correctBlock = levelParts[levelCounter].correctBlock + 1;
 
             sentenceScript.updateSentence();
             return;
         }
-        if(noBlocks % 2 == 0)
+        if (levelParts[levelCounter].blocks[noBlocks - 1].position == "right")
         {
             Instantiate(Textblock, new Vector3(2f, 3, 15), Quaternion.identity);
         }
@@ -107,20 +137,31 @@ public class GameScript : MonoBehaviour
         bool splitAtComma = false;
         string jsonObject = "";
         List<string> jsonList = new List<string>();
+        bool inBlockList = false;
 
         foreach(char c in jsonString)
         {
-            if(c == '{')
+            if(c == '[')
+            {
+                inBlockList = true;
+                jsonObject += c;
+            }
+            else if(c == ']' && inBlockList)
+            {
+                inBlockList = false; 
+                jsonObject += c;
+            }
+            else if(c == '{' && !inBlockList)
             {
                 splitAtComma = false;
                 jsonObject += c;
             }
-            else if(c == '}')
+            else if(c == '}' && !inBlockList)
             {
                 splitAtComma = true;
                 jsonObject += c;
             }
-            else if((c == ',' || c == ']') && splitAtComma)
+            else if((c == ',' || c == ']') && splitAtComma && !inBlockList)
             {
                 jsonList.Add(jsonObject);
                 jsonObject = "";
@@ -133,11 +174,4 @@ public class GameScript : MonoBehaviour
 
         return jsonList;
     }
-}
-
-public class LevelInfo
-{
-    public string sentence;
-    public List<string> blocks;
-    public int correctBlock;
 }
