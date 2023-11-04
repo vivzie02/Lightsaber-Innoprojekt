@@ -53,13 +53,13 @@ public class GameScript : MonoBehaviour
         //serverConnection.test();
 
         sentenceObject = GameObject.Find("Text");
-        sentenceScript = sentenceObject.GetComponent<SentenceScript>();
+        //sentenceScript = sentenceObject.GetComponent<SentenceScript>();
 
         string filePath = "";
         try
         {
-            filePath = Path.Combine(Application.persistentDataPath + "/LevelFiles", "TestLevel.json");
-            //filePath = ".\\Assets\\StreamingAssets\\test\\test.json";
+            //filePath = Path.Combine(Application.persistentDataPath + "/LevelFiles", "TestLevel.json");
+            filePath = ".\\Assets\\StreamingAssets\\test\\test.json";
         }
         catch(Exception ex)
         {
