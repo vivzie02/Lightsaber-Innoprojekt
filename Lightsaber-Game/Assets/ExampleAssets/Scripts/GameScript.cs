@@ -32,7 +32,7 @@ public class Block
 
 public class GameScript : MonoBehaviour
 {
-    private GameObject sentenceObject;
+    public GameObject sentenceObject;
     public SentenceScript sentenceScript;
 
     public GameObject Textblock;
@@ -52,8 +52,8 @@ public class GameScript : MonoBehaviour
         //ServerConnection serverConnection = new ServerConnection();
         //serverConnection.test();
 
-        sentenceObject = GameObject.Find("Text");
-        //sentenceScript = sentenceObject.GetComponent<SentenceScript>();
+        //sentenceObject = GameObject.Find("Text");
+        sentenceScript = sentenceObject.GetComponent<SentenceScript>();
 
         string filePath = "";
         try

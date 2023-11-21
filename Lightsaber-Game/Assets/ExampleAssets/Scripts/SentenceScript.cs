@@ -7,7 +7,7 @@ public class SentenceScript : MonoBehaviour
 {
     public Text text;
 
-    GameScript TheScript;
+    public GameScript TheScript;
     private GameObject TheGameController;
 
     private string word;

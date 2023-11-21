@@ -4685,6 +4685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 0}
+  TheScript: {fileID: 0}
 --- !u!1 &4204459054642844778
 GameObject:
   m_ObjectHideFlags: 0
@@ -7885,7 +7886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4570595d28508414c9bb352e865600c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentenceScript: {fileID: 0}
+  sentenceScript: {fileID: 3595826471494412957}
   Textblock: {fileID: 814958614589687536, guid: d08d7c06d21cacb45b9db13c51a3ad05,
     type: 3}
   correctBlock: 0
