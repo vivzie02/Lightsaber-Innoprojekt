@@ -28,7 +28,11 @@ function InputField(){
             return; 
         }
 
-        const newItem = { blockText: blockText, icon: <Avatar><FaCube /></Avatar>, correct: false, bgcolor: 'red' };
+        const newItem = { 
+            blockText: blockText, 
+            icon: <Avatar><FaCube /></Avatar>, 
+            correct: false, 
+            bgcolor: 'red' };
         
         if(direction === "left"){
             setListLeft([...listLeft, newItem]);
@@ -39,6 +43,21 @@ function InputField(){
         document.getElementById("blockInput").value = "";
     }
 
+    const handleDelete = (event, direction, index) => {
+        // Stop propagation to prevent the selectBlock function from being called
+        event.stopPropagation();
+
+        if (direction === "left") {
+            const newList = [...listLeft];
+            newList.splice(index, 1);
+            setListLeft(newList);
+        } else {
+            const newList = [...listRight];
+            newList.splice(index, 1);
+            setListRight(newList);
+        }
+    };
+
     const addBlockLeft = () => {
         addBlock("left");
     }
@@ -48,34 +67,37 @@ function InputField(){
     }
 
     const selectBlock = (index, direction) => {
-        if(direction === "left"){
+        if (direction === "left") {
             const newList = listLeft.map((item, i) => {
-                if(i === index){
-                    return {...item, correct: true, bgcolor: 'green'}
-                } else{
-                    return {...item, correct: false, bgcolor: 'red'}
+                if (i === index) {
+                    return { ...item, correct: true, bgcolor: 'green' }
+                } else {
+                    return { ...item, correct: false, bgcolor: 'red' }
                 }
             });
             setListLeft(newList);
 
-            const newRightList = listRight.map((item, i) => {
-                return {...item, correct: false, bgcolor: 'red'}
-            });
+            const newRightList = listRight.map((item) => ({
+                ...item,
+                correct: false,
+                bgcolor: 'red'
+            }));
             setListRight(newRightList);
-        }
-        else{
+        } else {
             const newList = listRight.map((item, i) => {
-                if(i === index){
-                    return {...item, correct: true, bgcolor: 'green'}
-                } else{
-                    return {...item, correct: false, bgcolor: 'red'}
+                if (i === index) {
+                    return { ...item, correct: true, bgcolor: 'green' }
+                } else {
+                    return { ...item, correct: false, bgcolor: 'red' }
                 }
             });
             setListRight(newList);
 
-            const newLeftList = listLeft.map((item, i) => {
-                return {...item, correct: false, bgcolor: 'red'}
-            });
+            const newLeftList = listLeft.map((item) => ({
+                ...item,
+                correct: false,
+                bgcolor: 'red'
+            }));
             setListLeft(newLeftList);
         }
     }
@@ -186,13 +208,14 @@ function InputField(){
                     <List sx={{ width: '100%', maxWidth: 360 }}>
                         {listLeft.map((item, index) => (
                             <ListItem key={index} className='block' onClick={() => selectBlock(index, "left")} style={{ backgroundColor: item.bgcolor }}>
-                                <ListItemAvatar>
-                                    <Avatar>
-                                        {item.icon}
-                                    </Avatar>
-                                </ListItemAvatar>
-                                <ListItemText primary={item.blockText} />
-                            </ListItem>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    {item.icon}
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={item.blockText} />
+                            <Button onClick={(event) => handleDelete(event, "left", index)}>🗑️</Button>
+                        </ListItem>
                         ))}
                     </List>
                 </div>
@@ -206,6 +229,7 @@ function InputField(){
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText primary={item.blockText} />
+                                <Button onClick={(event) => handleDelete(event, "right", index)}>🗑️</Button>
                             </ListItem>
                         ))}
                     </List>
