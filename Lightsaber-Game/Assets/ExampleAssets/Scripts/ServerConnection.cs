@@ -31,32 +31,31 @@ namespace ExampleAssets.Scripts
 
         public async Task UpdateFilesFromServer()
         {
-            List<string> filesOnServer = await Task.Run(() => SFTPUtils.GetFilesFromFTPDirectory(host, username, password, serverFilePath));
-            List<string> localFiles = Directory.GetFiles(Application.persistentDataPath + "/LevelFiles", "*" + ".json").ToList();
-
-            for (int i = localFiles.Count - 1; i >= 0; i--)
+            System.IO.DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/LevelFiles");
+            FileInfo[] localFiles = di.GetFiles();
+            foreach (FileInfo file in localFiles)
             {
-                string localFileName = Path.GetFileName(localFiles[i]);
-                if (!filesOnServer.Contains(localFileName))
-                {
-                    File.Delete(localFiles[i]);
-                    localFiles.RemoveAt(i);
-                }
-                else
-                    localFiles[i] = localFileName;
+                file.Delete();
             }
 
-            foreach (string fileOnServer in filesOnServer)
+            try
             {
-                if (!localFiles.Contains(fileOnServer))
+                List<string> filesOnServer = await Task.Run(() => SFTPUtils.GetFilesFromFTPDirectory(host, username, password, serverFilePath));
+
+                foreach (string fileOnServer in filesOnServer)
                 {
                     Debug.Log(localFilePath);
                     bool downloaded = await SFTPUtils.DownloadFile(host, username, password, serverFilePath + "/" + fileOnServer, localFilePath + "/" + fileOnServer);
                     if (!downloaded)
                         Debug.LogError("downloading file: " + fileOnServer + " failed");
                 }
+                
             }
-
+            catch(System.Exception e)
+            {
+                Debug.LogException(e);
+                return;
+            }
             OnFilesDownloaded?.Invoke();
         }
 

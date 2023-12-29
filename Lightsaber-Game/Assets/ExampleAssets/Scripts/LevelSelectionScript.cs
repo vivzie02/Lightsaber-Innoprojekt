@@ -27,7 +27,11 @@ public class LevelSelectionScript : MonoBehaviour
     async void Start()
     {
         Debug.Log("Start");
+
+        //only for testing purposes
+        //please switch this later
         await downloadLevels();
+        await saveExampleJson();
 
         string[] levelNames = getLevelNames();
 		printLevelNames(levelNames);
@@ -55,10 +59,9 @@ public class LevelSelectionScript : MonoBehaviour
 
     private string[] getLevelNames()
     {
-		
         string[] levelNames;
 
-        levelNames = Directory.GetFiles(Application.persistentDataPath + "\\LevelFiles", "*.json");
+        levelNames = Directory.GetFiles(Application.persistentDataPath + "/LevelFiles", "*.json");
 
         foreach(string name in levelNames)
         {
@@ -66,9 +69,14 @@ public class LevelSelectionScript : MonoBehaviour
         }
 
         return levelNames;
-		
+    }
 
-			
+    public async Task saveExampleJson()
+    {
+        string file = "[{\"sentence\":\"Once a year, we _____ our relatives in Canada. (to visit)\",\"blocks\":[{\"text\":\"visited\",\"position\":\"left\"},{\"text\":\"have to visit\",\"position\":\"left\"},{\"text\":\"have to visited\",\"position\":\"left\"},{\"text\":\"am visiting\",\"position\":\"left\"},{\"text\":\"visit\",\"position\":\"right\"},{\"text\":\"leave\",\"position\":\"right\"}],\"correctBlock\":4}]";
+        string filePath = Path.Combine(Application.persistentDataPath + "/LevelFiles", "ExampleLevel.json");
+
+        File.WriteAllText(filePath, file);
     }
 
     private void printLevelNames(string[] levelNames)
@@ -77,21 +85,31 @@ public class LevelSelectionScript : MonoBehaviour
 
         foreach (string filePath in levelNames)
         {
-            string levelName = Path.GetFileNameWithoutExtension(filePath);
-            GameObject levelButton = Instantiate(simpleButton, levelList.content);
+            try
+            {
+                Debug.Log("What is going on here? HEEEYEEHEHEAAa");
 
-            Text buttonTextComponent = levelButton.GetComponentInChildren<Text>();
-            buttonTextComponent.text = levelName;
+                string levelName = Path.GetFileNameWithoutExtension(filePath);
+                GameObject levelButton = Instantiate(simpleButton, levelList.content);
 
-            Button buttonButtonComponent = levelButton.GetComponentInChildren<Button>();
+                Text buttonTextComponent = levelButton.GetComponentInChildren<Text>();
+                buttonTextComponent.text = levelName;
 
-            levelButton.transform.localScale = new Vector3(3, 3, 3);
-            levelButton.transform.position = buttonPosition;
+                Button buttonButtonComponent = levelButton.GetComponentInChildren<Button>();
 
-            buttonPosition.y -= 0.18f;
+                levelButton.transform.localScale = new Vector3(3, 3, 3);
+                levelButton.transform.position = buttonPosition;
 
-            // Pass the button text as a parameter to the listener
-            buttonButtonComponent.onClick.AddListener(() => OnLevelButtonClicked(buttonTextComponent.text));
+                buttonPosition.y -= 0.18f;
+
+                // Pass the button text as a parameter to the listener
+                buttonButtonComponent.onClick.AddListener(() => OnLevelButtonClicked(buttonTextComponent.text));
+            }
+            catch(System.Exception ex)
+            {
+                Debug.LogError(ex);
+            }
+            
         }
     }
 
@@ -124,7 +142,6 @@ public class LevelSelectionScript : MonoBehaviour
         // go back to the main menu
         SceneManager.LoadScene("SampleScene");
     }
-
 
 
     /*
