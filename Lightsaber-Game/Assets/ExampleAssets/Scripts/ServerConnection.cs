@@ -13,10 +13,10 @@ namespace ExampleAssets.Scripts
 {
     public class ServerConnection : MonoBehaviour
     {
-        string host = "ftp-n2.cs.technikum-wien.at";
-        string username = "innoapp";
-        string password = "jGv9t^F5Nun*X6i4$97@";
-        string serverFilePath = "/sftp/Lightsaber";
+        string host = "127.0.0.1"; //"ftp-n2.cs.technikum-wien.at";
+        string username = "inno-user"; //"innoapp";
+        string password = "password"; //"jGv9t^F5Nun*X6i4$97@";
+        string serverFilePath = "/Lightsaber"; //"/sftp/Lightsaber";
         string localFilePath;
 
         public UnityEvent OnFilesDownloaded = new UnityEvent();

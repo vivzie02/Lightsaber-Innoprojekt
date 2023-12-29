@@ -48,9 +48,9 @@ class SFTPClient {
 (async () => {
     const parsedURL = new URL(process.env.SFTPTOGO_URL);
     const port = parsedURL.port || 22;
-    const username = "innoapp";
-    const password = "jGv9t^F5Nun*X6i4$97@";
-    const host = "ftp-n2.cs.technikum-wien.at";
+    const username = "inno-user";//"innoapp";
+    const password = "password"; //"jGv9t^F5Nun*X6i4$97@";
+    const host = "127.0.0.1"; //"ftp-n2.cs.technikum-wien.at";
 
     const express = require('express');
     const bodyParser = require('body-parser');
